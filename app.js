@@ -17,8 +17,8 @@ function Products(name, source) {
     this.name = name;
     this.source = source;
     this.votes = 0;
-    this.times=0;
-    
+    this.times = 0;
+
     Products.allimages.push(this);
 
 }
@@ -57,17 +57,17 @@ function getRandomIndex() {
 
 function renderThreeImages() {
     leftImageIndex = getRandomIndex();
-    
+
     do {
         middleImageIndex = getRandomIndex();
-        
+
     }
 
-    while (leftImageIndex === middleImageIndex )
-    do{
-        rightImageIndex=getRandomIndex();
+    while (leftImageIndex === middleImageIndex)
+    do {
+        rightImageIndex = getRandomIndex();
     }
-    while( leftImageIndex === rightImageIndex && rightImageIndex === middleImageIndex77leftImageIndex === middleImageIndex)
+    while (leftImageIndex === rightImageIndex && rightImageIndex === middleImageIndex77leftImageIndex === middleImageIndex)
 
 
     Products.allimages;
@@ -97,24 +97,24 @@ function clickEvent(event) {
 
     if (userAttempts < maxAttempts) {
         if (event.target.id == 'left-image') {
-            console.log(leftImageIndex,Products.allimages[leftImageIndex]);
+            console.log(leftImageIndex, Products.allimages[leftImageIndex]);
             Products.allimages[leftImageIndex].votes++;
-           
-           
-           
-            
+
+
+
+
         }
         else if (event.target.id == 'middle-image') {
-            console.log(middleImageIndex,Products.allimages[middleImageIndex]);
+            console.log(middleImageIndex, Products.allimages[middleImageIndex]);
             Products.allimages[middleImageIndex].votes++;
-            
-            
+
+
         }
         else {
-            console.log(rightImageIndex,Products.allimages[rightImageIndex]);
+            console.log(rightImageIndex, Products.allimages[rightImageIndex]);
             Products.allimages[rightImageIndex].votes++;
-            
-            
+
+
         }
 
         renderThreeImages();
@@ -128,13 +128,13 @@ function clickEvent(event) {
         for (let i = 0; i < Products.allimages.length; i++) {
             productsResult = document.createElement('li');
             list.appendChild(productsResult);
-            productsResult.textContent = Products.allimages[i].name + ' has ' + Products.allimages[i].votes + ' votes '+'and was seen'+ Products.allimages[i].times+'  times , and has a percentage of ' +Products.allimages[i].votes/Products.allimages[i].times ;
+            productsResult.textContent = Products.allimages[i].name + ' has ' + Products.allimages[i].votes + ' votes ' + 'and was seen' + Products.allimages[i].times + '  times , and has a percentage of ' + Products.allimages[i].votes / Products.allimages[i].times;
         }
 
-        
+
         rightImageElement.removeEventListener('click', clickEvent);
         middleImageElement.removeEventListener('click', clickEvent);
-       leftImageElement.removeEventListener('click', clickEvent);
+        leftImageElement.removeEventListener('click', clickEvent);
 
 
     }
