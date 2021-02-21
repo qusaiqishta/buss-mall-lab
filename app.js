@@ -134,8 +134,7 @@ function clickEvent(event) {
         
         rightImageElement.removeEventListener('click', clickEvent);
         middleImageElement.removeEventListener('click', clickEvent);
-
-        leftImageElement.removeEventListener('click', clickEvent);
+       leftImageElement.removeEventListener('click', clickEvent);
 
 
     }
