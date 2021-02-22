@@ -11,13 +11,34 @@ let userAttempts = 0;
 let leftImageIndex;
 let middleImageIndex;
 let rightImageIndex;
+let ifRepeat=function(a,b,c){
+    let threevariables=[a,b,c]
+    for( let i=0;i<threevariables.length;i++){
 
+        if(threevariables[i]===leftImageIndex||threevariables[i]===middleImageIndex||threevariables[i]===rightImageIndex){
+            return false;
+        }
+        else{
+            return true;
+        }
+        
+    }
+
+
+}
+
+
+
+let imagesName = [];
+let numberOfVotes = [];
+let numberOfShows=[];
 
 function Products(name, source) {
     this.name = name;
     this.source = source;
     this.votes = 0;
     this.times = 0;
+    imagesName.push(name);
 
     Products.allimages.push(this);
 
@@ -50,6 +71,7 @@ new Products('wine-glass', 'images/wine-glass.jpg');
 console.log(Products.allimages);
 
 
+
 function getRandomIndex() {
     return Math.floor(Math.random() * Products.allimages.length);
 }
@@ -57,18 +79,17 @@ function getRandomIndex() {
 
 function renderThreeImages() {
     leftImageIndex = getRandomIndex();
+    middleImageIndex=getRandomIndex();
+    rightImageIndex=getRandomIndex();
 
-    do {
-        middleImageIndex = getRandomIndex();
-
-    }
-
-    while (leftImageIndex === middleImageIndex)
-    do {
-        rightImageIndex = getRandomIndex();
-    }
-    while (leftImageIndex === rightImageIndex && rightImageIndex === middleImageIndex77leftImageIndex === middleImageIndex)
-
+    
+    
+   
+    while (leftImageIndex === rightImageIndex || rightImageIndex === middleImageIndex||middleImageIndex===leftImageIndex||ifRepeat(leftImageIndex,middleImageIndex,rightImageIndex)){
+    
+    rightImageIndex=getRandomIndex();
+    middleImageIndex=getRandomIndex()
+}
 
     Products.allimages;
     console.log(Products.allimages[leftImageIndex]);
@@ -78,11 +99,13 @@ function renderThreeImages() {
     middleImageElement.src = Products.allimages[middleImageIndex].source;
     Products.allimages[middleImageIndex].times++;
     rightImageElement.src = Products.allimages[rightImageIndex].source;
-    Products.allimages[rightImageIndex].times++;
+    Products.allimages[rightImageIndex].times++;}
 
-}
+
+
 
 renderThreeImages();
+
 
 
 
@@ -116,6 +139,8 @@ function clickEvent(event) {
 
 
         }
+    
+
 
         renderThreeImages();
 
@@ -128,15 +153,72 @@ function clickEvent(event) {
         for (let i = 0; i < Products.allimages.length; i++) {
             productsResult = document.createElement('li');
             list.appendChild(productsResult);
-            productsResult.textContent = Products.allimages[i].name + ' has ' + Products.allimages[i].votes + ' votes ' + 'and was seen' + Products.allimages[i].times + '  times , and has a percentage of ' + Products.allimages[i].votes / Products.allimages[i].times;
+            productsResult.textContent = Products.allimages[i].name + ' has ' + Products.allimages[i].votes + ' votes ' + 'and was seen' + Products.allimages[i].times  + '   times , and has a percentage of ' +( Products.allimages[i].votes / Products.allimages[i].times).toFixed(2);
         }
 
+
+        
 
         rightImageElement.removeEventListener('click', clickEvent);
         middleImageElement.removeEventListener('click', clickEvent);
         leftImageElement.removeEventListener('click', clickEvent);
 
+        for (let i = 0; i < Products.allimages.length; i++) {
+            numberOfVotes.push(Products.allimages[i].votes);
+            numberOfShows.push(Products.allimages[i].times) ;
+            
+        }
+        visChart();
+
+
 
     }
 }
 
+
+
+
+
+
+function visChart() {
+
+    let ctx = document.getElementById('myChart').getContext('2d');
+  
+    let chart = new Chart(ctx, {
+      // The type of chart we want to create
+      type: 'bar',
+  
+      // The data for our dataset
+      data: {
+        labels: imagesName,
+  
+        datasets: [
+  
+  
+          {
+            label: 'Number of votes',
+            backgroundColor: '#1e212d',
+            borderColor: '#1e212d',
+            data: numberOfVotes
+          },
+          
+          {
+            label: 'product shown',
+            backgroundColor: 'red',
+            borderColor: 'red',
+            data: numberOfShows
+          },
+     
+  
+        ]
+      },
+      //  
+  
+      // Configuration options go here
+      options: {}
+    });
+    
+  
+  
+  
+  }
