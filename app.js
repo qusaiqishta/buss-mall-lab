@@ -8,21 +8,24 @@ let maxAttempts = 27;
 let userAttempts = 0;
 
 
+let threevariables=[];
 let leftImageIndex;
 let middleImageIndex;
 let rightImageIndex;
-let ifRepeat=function(a,b,c){
-    let threevariables=[a,b,c]
+let ifRepeat=function(){
+    console.log('comparing between ',threevariables, 'and ', leftImageIndex,middleImageIndex,rightImageIndex);
     for( let i=0;i<threevariables.length;i++){
 
         if(threevariables[i]===leftImageIndex||threevariables[i]===middleImageIndex||threevariables[i]===rightImageIndex){
-            return false;
+            return true;
         }
         else{
-            return true;
+            return false;
         }
         
     }
+    threevariables=[leftImageIndex,middleImageIndex,rightImageIndex];
+    return false;
 
 
 }
@@ -41,10 +44,33 @@ function Products(name, source) {
     imagesName.push(name);
 
     Products.allimages.push(this);
+    
+
 
 }
 
 Products.allimages = [];
+
+
+function settingItems(){
+  
+    let data=JSON.stringify(Products.allimages);
+    localStorage.setItem('votes',data);
+    console.log('data'+data);
+   
+}
+
+function gettingItems(){
+    let stringObject=localStorage.getItem('votes');
+    let normalObject=JSON.parse(stringObject);
+    console.log(normalObject);
+    if(normalObject!==null){
+        Products.allimages=normalObject;
+    }
+
+    renderThreeImages();
+}
+
 
 
 new Products('bag', 'images/bag.jpg');
@@ -85,7 +111,7 @@ function renderThreeImages() {
     
     
    
-    while (leftImageIndex === rightImageIndex || rightImageIndex === middleImageIndex||middleImageIndex===leftImageIndex||ifRepeat(leftImageIndex,middleImageIndex,rightImageIndex)){
+    while (leftImageIndex === rightImageIndex || rightImageIndex === middleImageIndex||middleImageIndex===leftImageIndex||ifRepeat()){
     
     rightImageIndex=getRandomIndex();
     middleImageIndex=getRandomIndex()
@@ -139,6 +165,7 @@ function clickEvent(event) {
 
 
         }
+        settingItems();
     
 
 
@@ -222,3 +249,5 @@ function visChart() {
   
   
   }
+
+  gettingItems();
